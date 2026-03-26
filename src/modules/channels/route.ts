@@ -1,8 +1,8 @@
 import Elysia from "elysia";
 import { listChannelsService } from "./service";
 import { listChannelsQuerySchema, listChannelsResponseSchema } from "./schema";
-import { apiError } from "lib/response";
 import { listChannelsDoc } from "./doc";
+import { CommonErrors } from "lib/errors";
 
 const channelRoutes = new Elysia({
   prefix: "channels",
@@ -15,7 +15,7 @@ const channelRoutes = new Elysia({
     query: listChannelsQuerySchema,
     response: {
       200: listChannelsResponseSchema,
-      400: apiError
+      ...CommonErrors,
     },
     detail: listChannelsDoc
   })

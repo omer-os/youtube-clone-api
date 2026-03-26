@@ -1,6 +1,5 @@
 import { db } from "lib/db"
 import {
-  listChannelsResponseSchemaType,
   type listChannelsQuerySchemaType
 } from "./schema"
 import { ok } from "lib/response"

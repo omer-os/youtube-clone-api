@@ -32,6 +32,7 @@ yarn-error.log*
 .env.production.local
 
 /prisma/generated
+result.xml
 
 # vercel
 .vercel

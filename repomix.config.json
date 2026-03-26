@@ -1,0 +1,10 @@
+{
+  "output": {
+    "filePath": "result.xml"
+  },
+  "include": [
+    "src/**",
+    "prisma/schema.prisma",
+    "package.json"
+  ]
+}

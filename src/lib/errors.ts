@@ -1,3 +1,5 @@
+import { apiError } from "./response"
+
 export class AppError extends Error {
   constructor(
     public message: string,
@@ -30,4 +32,13 @@ export class ConflictError extends AppError {
   constructor(message = "Resource already exists") {
     super(message, 409, "CONFLICT")
   }
+}
+
+export const CommonErrors = {
+  400: apiError,
+  401: apiError,
+  403: apiError,
+  404: apiError,
+  409: apiError,
+  500: apiError,
 }
