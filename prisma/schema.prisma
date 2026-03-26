@@ -1,4 +1,3 @@
-
 generator client {
   provider = "prisma-client"
   output   = "./generated/"
@@ -18,6 +17,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  channel       Channel?
 
   @@unique([email])
   @@map("user")
@@ -69,4 +69,32 @@ model Verification {
 
   @@index([identifier])
   @@map("verification")
+}
+
+model Channel {
+  id              String   @id @default(cuid())
+  name            String
+  slug            String   @unique
+  description     String?
+  avatarUrl       String?
+  bannerUrl       String?
+  userId          String   @unique
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  videos          Video[]
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@index([slug])
+  @@map("channel")
+}
+
+model Video {
+  id        String   @id @default(cuid())
+  channelId String
+  channel   Channel  @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([channelId])
+  @@map("video")
 }

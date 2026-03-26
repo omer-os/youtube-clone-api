@@ -3,6 +3,7 @@ import { auth } from "./lib/auth";
 import { cors } from '@elysiajs/cors'
 import openapi from "@elysiajs/openapi";
 import { OpenAPI } from "./lib/auth-openapi";
+import allModules from "./modules/all-modules";
 
 const app = new Elysia()
   .use(
@@ -14,7 +15,7 @@ const app = new Elysia()
     })
   )
   .mount(auth.handler)
-  .get("/", () => "Hello Elysia")
+  .use(allModules)
   .use(openapi({
     documentation: {
       components: await OpenAPI.components,
