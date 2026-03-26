@@ -4,6 +4,7 @@ import { cors } from '@elysiajs/cors'
 import openapi from "@elysiajs/openapi";
 import { OpenAPI } from "./lib/auth-openapi";
 import allModules from "./modules/all-modules";
+import { errorPlugin } from "./plugins/error-plugin";
 
 const app = new Elysia()
   .use(
@@ -15,6 +16,7 @@ const app = new Elysia()
     })
   )
   .mount(auth.handler)
+  .use(errorPlugin)
   .use(allModules)
   .use(openapi({
     documentation: {
