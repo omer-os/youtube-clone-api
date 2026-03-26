@@ -1,5 +1,6 @@
 import { Static, t } from "elysia";
-import { apiResponse, ApiResponseType } from "lib/response";
+import { apiResponse, ApiResponseType, paginatedResponse } from "lib/response";
+import { paginationQuerySchema } from "lib/shared/query-schemas";
 
 export const channelModel = t.Object({
   id: t.String(),
@@ -12,12 +13,8 @@ export const channelModel = t.Object({
   updatedAt: t.String()
 })
 
-export const listChannelsQuerySchema = t.Object({
-  page: t.Number(),
-  size: t.Number(),
-})
-
-export const listChannelsResponseSchema = apiResponse(t.Array(channelModel))
+export const listChannelsQuerySchema = paginationQuerySchema
+export const listChannelsResponseSchema = paginatedResponse(channelModel)
 
 export type listChannelsQuerySchemaType = Static<typeof listChannelsQuerySchema>
 export type listChannelsResponseSchemaType = ApiResponseType<typeof listChannelsResponseSchema>
