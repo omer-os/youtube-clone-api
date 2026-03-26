@@ -11,5 +11,6 @@ export const auth = betterAuth({
   database: prismaAdapter(db, {
     provider: "sqlite",
   }),
-  plugins: [openAPI()]
+  plugins: [openAPI()],
+  basePath: "auth/"
 });
