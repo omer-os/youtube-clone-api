@@ -1,8 +1,8 @@
 import Elysia from "elysia";
-import { channelModule } from "./channel/channel.routes";
+import channelRoutes from "./channels/route";
 
 const allModules = new Elysia()
-  .use(channelModule)
+  .use(channelRoutes)
 
 
 export default allModules
