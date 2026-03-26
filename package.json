@@ -3,11 +3,15 @@
   "version": "1.0.50",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "bun run --watch src/index.ts"
+    "dev": "bun run --watch src/app.ts"
   },
   "dependencies": {
+    "@better-auth/prisma-adapter": "^1.5.6",
+    "@elysiajs/cors": "^1.4.1",
+    "@elysiajs/openapi": "^1.4.14",
     "@prisma/adapter-pg": "^7.5.0",
     "@prisma/client": "^7.5.0",
+    "better-auth": "^1.5.6",
     "elysia": "latest",
     "pg": "^8.20.0"
   },
