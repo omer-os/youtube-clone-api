@@ -1,6 +1,6 @@
-import { Static, t } from "elysia";
-import { ApiResponseType, apiResponse, paginatedResponse } from "lib/response";
-import { paginationQuerySchema } from "lib/shared/query-schemas";
+import { Static, t } from "elysia"
+import { ApiResponseType, apiResponse, paginatedResponse } from "lib/response"
+import { paginationQuerySchema } from "lib/shared/query-schemas"
 
 export const channelModel = t.Object({
   id: t.String(),
@@ -21,19 +21,21 @@ export const showChannelParamsSchema = t.Object({
 })
 export const showChannelResponseSchema = apiResponse(channelModel)
 
+const imageFile = t.File({ maxSize: "5m", type: ["image/png", "image/jpeg", "image/webp"] })
+
 export const createChannelBodySchema = t.Object({
   name: t.String(),
   description: t.Optional(t.Nullable(t.String())),
-  avatarUrl: t.Optional(t.Nullable(t.String())),
-  bannerUrl: t.Optional(t.Nullable(t.String())),
+  avatar: t.Optional(imageFile),
+  banner: t.Optional(imageFile),
 })
 export const createChannelResponseSchema = apiResponse(channelModel)
 
 export const editChannelBodySchema = t.Object({
   name: t.Optional(t.String()),
   description: t.Optional(t.Nullable(t.String())),
-  avatarUrl: t.Optional(t.Nullable(t.String())),
-  bannerUrl: t.Optional(t.Nullable(t.String())),
+  avatar: t.Optional(imageFile),
+  banner: t.Optional(imageFile),
 })
 export const editChannelResponseSchema = apiResponse(channelModel)
 
