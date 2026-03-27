@@ -1,7 +1,7 @@
 import { type DocumentDecoration } from "elysia"
 
 export const listCommentsDoc: DocumentDecoration = {
-  description: "list top-level comments for a video",
+  description: "list comments",
   operationId: "listComments",
   summary: "list",
 }
