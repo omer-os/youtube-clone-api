@@ -19,6 +19,7 @@ model User {
   accounts      Account[]
   channel       Channel?
   views         VideoView[]
+  comments      Comment[]
 
   @@unique([email])
   @@map("user")
@@ -97,6 +98,7 @@ model Video {
   thumbnailUrl String?
   visibility   Visibility  @default(PUBLIC)
   views        VideoView[]
+  comments     Comment[]
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 
@@ -116,6 +118,25 @@ model VideoView {
   @@index([userId])
   @@index([videoId])
   @@map("video_view")
+}
+
+model Comment {
+  id        String    @id @default(cuid())
+  content   String
+  videoId   String
+  video     Video     @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  parentId  String?
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id], onDelete: Cascade)
+  replies   Comment[] @relation("CommentReplies")
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+
+  @@index([videoId])
+  @@index([userId])
+  @@index([parentId])
+  @@map("comment")
 }
 
 enum Visibility {
