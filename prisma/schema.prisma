@@ -8,16 +8,17 @@ datasource db {
 }
 
 model User {
-  id            String    @id
+  id            String      @id
   name          String
   email         String
-  emailVerified Boolean   @default(false)
+  emailVerified Boolean     @default(false)
   image         String?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   sessions      Session[]
   accounts      Account[]
   channel       Channel?
+  views         VideoView[]
 
   @@unique([email])
   @@map("user")
@@ -72,27 +73,53 @@ model Verification {
 }
 
 model Channel {
-  id              String   @id @default(cuid())
-  name            String
-  description     String?
-  avatarUrl       String?
-  bannerUrl       String?
-  userId          String   @unique
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  videos          Video[]
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  avatarUrl   String?
+  bannerUrl   String?
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  videos      Video[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   @@map("channel")
 }
 
 model Video {
-  id        String   @id @default(cuid())
-  channelId String
-  channel   Channel  @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String      @id @default(cuid())
+  channelId    String
+  channel      Channel     @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  title        String
+  description  String?
+  videoUrl     String
+  thumbnailUrl String?
+  visibility   Visibility  @default(PUBLIC)
+  views        VideoView[]
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
 
   @@index([channelId])
   @@map("video")
+}
+
+model VideoView {
+  id        String   @id @default(cuid())
+  videoId   String
+  video     Video    @relation(fields: [videoId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([videoId, userId])
+  @@index([userId])
+  @@index([videoId])
+  @@map("video_view")
+}
+
+enum Visibility {
+  PUBLIC
+  PRIVATE
+  UNLISTED
 }
